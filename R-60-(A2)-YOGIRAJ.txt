@@ -1,0 +1,371 @@
+----------------------------------------------------------------------------
+create database banksystemA2;
+
+use banksystemA2;
+
+----------------------------------------------------------------------------
+
+CREATE TABLE Branch(branch_name varchar(10), branch_city varchar(10), assests varchar(10), primary key(branch_name));
+
+
+INSERT INTO Branch(branch_name, branch_city, assests)
+VALUES ("Katraj", "Pune", "NULL"), ("KP", "Pune", "NULL"), ("Dhankawadi", "Pune", "NULL"), ("Sinhgad", "Pune", "NULL"), ("Deccan", "Pune", "NULL"),("Kothrud", "Pune", "NULL"), ("Kondhwa", "Pune", "NULL"), ("Warje", "Pune", "NULL"), ("Dhayari", "Pune", "NULL"), ("Hadapsar", "Pune", "NULL");
+
+select * from Branch;
+
+----------------------------------------------------------------------------
+
+create table Customer(cust_name varchar(20) primary key, cust_street varchar(10), cust_city varchar(10));
+
+
+INSERT INTO Customer (cust_name, cust_street, cust_city) VALUES ("yogiraj", "10th St.", "Pune"), ("prithvi", "10th St.", "Pune"), ("pushkaraj", "10th St.", "Pune"), ("mosin", "10th St.", "Pune"), ("amaan", "10th St.", "Pune"), ("raman", "10th St.", "Pune"), ("vedant", "10th St.", "Pune"), ("aditya", "10th St.", "Pune"), ("balaji", "10th St.", "Pune"), ("govind", "10th St.", "Pune");
+
+select * from Customer;
+
+----------------------------------------------------------------------------
+
+create table Account(Acc_no int primary key, branch_name varchar(10), balance int, foreign key (branch_name) references Branch(branch_name));
+
+INSERT INTO Account (Acc_no, branch_name, balance) VALUES (1, 'Deccan', 56415), (2, 'Dhankawadi', 87941), (3, 'Dhayari', 13797), (4, 'Hadapsar', 4679465), (5, 'Katraj', 12657945), (6, 'Kondhwa', 7894556), (7, 'Kothrud', 798154), (8, 'KP', 45687125), (9, 'Sinhgad', 7891656), (10, 'Warje', 46861324);
+
+select * from Account;
+
+----------------------------------------------------------------------------
+
+create table Depositor(cust_name varchar(20), acc_no int, foreign key(cust_name) references Customer(cust_name), foreign key(acc_no) references Account(Acc_no));
+
+INSERT INTO Depositor (cust_name, acc_no) VALUES ('yogiraj', 1), ('prithvi', 2), ('pushkaraj', 3), ('mosin', 4), ('amaan', 5), ('raman', 6), ('vedant', 7), ('aditya', 8), ('balaji', 9), ('govind', 10);
+
+select * from Depositor;
+
+
+---------------------------------------------------------------------------
+
+create table Loan(loan_no int primary key, branch_name varchar(10), amount int, foreign key(branch_name) references Branch(branch_name));
+
+INSERT INTO Loan (loan_no, branch_name, amount) VALUES (1, 'Deccan', 1400000), (2, 'Dhankawadi', 250000), (3, 'Dhayari', 450000), (4, 'Hadapsar', 3700000), (5, 'Katraj', 120000), (6, 'Kondhwa', 230000), (7, 'Kothrud', 870000), (8, 'KP', 690000), (9, 'Sinhgad', 310000), (10, 'Warje', 980000);
+
+select * from Loan;
+
+----------------------------------------------------------------------------
+
+create table Borrower(cust_name varchar(20), loan_no int, foreign key(cust_name) references Customer(cust_name), foreign key(loan_no) references Loan(loan_no));
+
+INSERT INTO Borrower (cust_name, loan_no) VALUES ('yogiraj', 1), ('prithvi', 2), ('pushkaraj', 3), ('mosin', 4), ('amaan', 5), ('raman', 6), ('vedant', 7), ('aditya', 8), ('balaji', 9), ('govind', 10);
+
+select * from Borrower;
+
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
+
+Q1.
+
+select distinct l.branch_name from loan l;
+
++-------------+
+| branch_name |
++-------------+
+| Deccan      |
+| Dhankawadi  |
+| Dhayari     |
+| Hadapsar    |
+| Katraj      |
+| Kondhwa     |
+| Kothrud     |
+| KP          |
+| Sinhgad     |
+| Warje       |
++-------------+
+
+
+----------------------------------------------------------------------------
+
+Q2.
+
+select l.loan_no from loan l where l.branch_name = "Akurdi" and l.amount > 12000;
+
+
+Empty set (0.13 sec)
+
+----------------------------------------------------------------------------
+
+
+Q3.
+
+select b.*, l.amount from borrower b, loan l where b.loan_no = l.loan_no;
+
+
++-----------+---------+--------+
+| cust_name | loan_no | amount |
++-----------+---------+--------+
+| yogiraj   |       1 | 500000 |
+| prithvi   |       2 | 500000 |
+| pushkaraj |       3 | 500000 |
+| mosin     |       4 | 500000 |
+| amaan     |       5 | 500000 |
+| raman     |       6 | 500000 |
+| vedant    |       7 | 500000 |
+| aditya    |       8 | 500000 |
+| balaji    |       9 | 500000 |
+| govind    |      10 | 500000 |
++-----------+---------+--------+
+
+
+----------------------------------------------------------------------------
+
+Q4.
+
+select cust_name from borrower, loan where borrower.loan_no = loan.loan_no and loan.branch_name = "Akurdi" Order BY cust_name;
+
+Empty set (0.07 sec)
+
+----------------------------------------------------------------------------
+
+Q5.
+
+create view view4 as select d.* from depositor d;
+
+create view view5 as select b.* from borrower b;
+
+create view view6 as select view4.*, view5.loan_no from view4 LEFT JOIN view5 ON view4.cust_name = view5.cust_name;
+
+select * from view6;
+
+
++-----------+--------+---------+
+| cust_name | acc_no | loan_no |
++-----------+--------+---------+
+| yogiraj   |      1 |       1 |
+| prithvi   |      2 |       2 |
+| pushkaraj |      3 |       3 |
+| mosin     |      4 |       4 |
+| amaan     |      5 |       5 |
+| raman     |      6 |       6 |
+| vedant    |      7 |       7 |
+| aditya    |      8 |       8 |
+| balaji    |      9 |       9 |
+| govind    |     10 |      10 |
++-----------+--------+---------+
+10 rows in set (0.07 sec)
+
+
+----------------------------------------------------------------------------
+
+Q6.
+
+select b.*, d.acc_no from borrower b, depositor d where b.cust_name = d.cust_name;
+
+
++-----------+---------+--------+
+| cust_name | loan_no | acc_no |
++-----------+---------+--------+
+| yogiraj   |       1 |      1 |
+| prithvi   |       2 |      2 |
+| pushkaraj |       3 |      3 |
+| mosin     |       4 |      4 |
+| amaan     |       5 |      5 |
+| raman     |       6 |      6 |
+| vedant    |       7 |      7 |
+| aditya    |       8 |      8 |
+| balaji    |       9 |      9 |
+| govind    |      10 |     10 |
++-----------+---------+--------+
+10 rows in set (0.00 sec)
+
+
+----------------------------------------------------------------------------
+
+Q7.
+
+SELECT C.CUST_NAME AS 'LIST OF CUSTOMERS HAVING ACC BUT NO LOAN' FROM CUSTOMER C LEFT JOIN DEPOSITOR D ON C.CUST_NAME = D.CUST_NAME LEFT JOIN BORROWER B ON C.CUST_NAME = B.CUST_NAME WHERE D.ACC_NO IS NOT NULL AND B.LOAN_NO IS NULL;
+
+
+Empty set (0.46 sec)
+
+
+----------------------------------------------------------------------------
+
+
+Q8.
+
+select avg(balance) as branchAverage, branch_name from Account group by branch_name;
+
++---------------+-------------+
+| branchAverage | branch_name |
++---------------+-------------+
+|    56415.0000 | Deccan      |
+|    87941.0000 | Dhankawadi  |
+|    13797.0000 | Dhayari     |
+|  4679465.0000 | Hadapsar    |
+| 12657945.0000 | Katraj      |
+|  7894556.0000 | Kondhwa     |
+|   798154.0000 | Kothrud     |
+| 45687125.0000 | KP          |
+|  7891656.0000 | Sinhgad     |
+| 46861324.0000 | Warje       |
++---------------+-------------+
+10 rows in set (0.03 sec)
+
+----------------------------------------------------------------------------
+
+Q9.
+
+select count(d.cust_name) as 'No. of Depositors at Each Branch', a.branch_name from depositor d, account a where d.acc_no = a.Acc_no group by a.branch_name;
+
++----------------------------------+-------------+
+| No. of Depositors at Each Branch | branch_name |
++----------------------------------+-------------+
+|                                1 | Deccan      |
+|                                1 | Dhankawadi  |
+|                                1 | Dhayari     |
+|                                1 | Hadapsar    |
+|                                1 | Katraj      |
+|                                1 | Kondhwa     |
+|                                1 | Kothrud     |
+|                                1 | KP          |
+|                                1 | Sinhgad     |
+|                                1 | Warje       |
++----------------------------------+-------------+
+10 rows in set (0.04 sec)
+
+----------------------------------------------------------------------------
+
+Q10.
+
+SELECT cust_name, cust_city FROM Customer WHERE cust_name LIKE 'P%';
++-----------+-----------+
+| cust_name | cust_city |
++-----------+-----------+
+| prithvi   | Pune      |
+| pushkaraj | Pune      |
++-----------+-----------+
+2 rows in set (0.10 sec)
+
+----------------------------------------------------------------------------
+
+Q11.
+
+SELECT DISTINCT branch_city FROM Branch;
++-------------+
+| branch_city |
++-------------+
+| Pune        |
++-------------+
+1 row in set (0.03 sec)
+
+----------------------------------------------------------------------------
+
+Q12.
+
+SELECT branch_name AS 'Branches having avg balance > 12000' FROM Account GROUP BY branch_name HAVING AVG(balance) > 12000;
+
++-------------------------------------+
+| Branches having avg balance > 12000 |
++-------------------------------------+
+| Deccan                              |
+| Dhankawadi                          |
+| Dhayari                             |
+| Hadapsar                            |
+| Katraj                              |
+| Kondhwa                             |
+| Kothrud                             |
+| KP                                  |
+| Sinhgad                             |
+| Warje                               |
++-------------------------------------+
+10 rows in set (0.01 sec)
+
+
+----------------------------------------------------------------------------
+
+Q13.
+
+SELECT COUNT(*) AS 'No. of Tuples in Customer Relation' FROM Customer;
+
++------------------------------------+
+| No. of Tuples in Customer Relation |
++------------------------------------+
+|                                 10 |
++------------------------------------+
+1 row in set (0.13 sec)
+
+
+----------------------------------------------------------------------------
+
+Q14.
+
+SELECT SUM(amount) AS 'Total Loan Amount Given by Bank' FROM Loan;
+
+
++---------------------------------+
+| Total Loan Amount Given by Bank |
++---------------------------------+
+|                         5000000 |
++---------------------------------+
+1 row in set (0.00 sec)
+
+
+----------------------------------------------------------------------------
+
+Q15.
+
+DELETE FROM Loan WHERE amount BETWEEN 1300 AND 1500;
+
+Query OK, 2 rows affected (0.03 sec)
+
+----------------------------------------------------------------------------
+
+Q16.
+
+DELETE FROM Branch WHERE branch_name = 'NIGDI';
+
+Query OK, 1 rows affected (0.00 sec)
+
+----------------------------------------------------------------------------
+
+----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

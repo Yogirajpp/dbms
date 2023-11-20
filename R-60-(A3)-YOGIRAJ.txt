@@ -1,0 +1,273 @@
+----------------------------------------------------------------------------
+create database banksystem;
+
+use banksystem;
+
+----------------------------------------------------------------------------
+
+CREATE TABLE Branch(branch_name varchar(10), branch_city varchar(10), assests varchar(10), primary key(branch_name));
+
+
+INSERT INTO Branch(branch_name, branch_city, assests)
+VALUES ("Katraj", "Pune", "NULL"), ("KP", "Pune", "NULL"), ("Dhankawadi", "Pune", "NULL"), ("Sinhgad", "Pune", "NULL"), ("Deccan", "Pune", "NULL"),("Kothrud", "Pune", "NULL"), ("Kondhwa", "Pune", "NULL"), ("Warje", "Pune", "NULL"), ("Dhayari", "Pune", "NULL"), ("Hadapsar", "Pune", "NULL");
+
+select * from Branch;
+
+----------------------------------------------------------------------------
+
+create table Customer(cust_name varchar(20) primary key, cust_street varchar(10), cust_city varchar(10));
+
+
+INSERT INTO Customer (cust_name, cust_street, cust_city) VALUES ("yogiraj", "10th St.", "Pune"), ("prithvi", "10th St.", "Pune"), ("pushkaraj", "10th St.", "Pune"), ("mosin", "10th St.", "Pune"), ("amaan", "10th St.", "Pune"), ("raman", "10th St.", "Pune"), ("vedant", "10th St.", "Pune"), ("aditya", "10th St.", "Pune"), ("balaji", "10th St.", "Pune"), ("govind", "10th St.", "Pune");
+
+select * from Customer;
+
+----------------------------------------------------------------------------
+
+create table Account(Acc_no int primary key, branch_name varchar(10), balance int, foreign key (branch_name) references Branch(branch_name));
+
+INSERT INTO Account (Acc_no, branch_name, balance) VALUES (1, 'Deccan', 56415), (2, 'Dhankawadi', 87941), (3, 'Dhayari', 13797), (4, 'Hadapsar', 4679465), (5, 'Katraj', 12657945), (6, 'Kondhwa', 7894556), (7, 'Kothrud', 798154), (8, 'KP', 45687125), (9, 'Sinhgad', 7891656), (10, 'Warje', 46861324);
+
+select * from Account;
+
+----------------------------------------------------------------------------
+
+create table Depositor(cust_name varchar(20), acc_no int, foreign key(cust_name) references Customer(cust_name), foreign key(acc_no) references Account(Acc_no));
+
+INSERT INTO Depositor (cust_name, acc_no) VALUES ('yogiraj', 1), ('prithvi', 2), ('pushkaraj', 3), ('mosin', 4), ('amaan', 5), ('raman', 6), ('vedant', 7), ('aditya', 8), ('balaji', 9), ('govind', 10);
+
+select * from Depositor;
+
+
+---------------------------------------------------------------------------
+
+create table Loan(loan_no int primary key, branch_name varchar(10), amount int, foreign key(branch_name) references Branch(branch_name));
+
+INSERT INTO Loan (loan_no, branch_name, amount) VALUES (1, 'Deccan', 1400000), (2, 'Dhankawadi', 250000), (3, 'Dhayari', 450000), (4, 'Hadapsar', 3700000), (5, 'Katraj', 120000), (6, 'Kondhwa', 230000), (7, 'Kothrud', 870000), (8, 'KP', 690000), (9, 'Sinhgad', 310000), (10, 'Warje', 980000);
+
+select * from Loan;
+
+----------------------------------------------------------------------------
+
+create table Borrower(cust_name varchar(20), loan_no int, foreign key(cust_name) references Customer(cust_name), foreign key(loan_no) references Loan(loan_no));
+
+INSERT INTO Borrower (cust_name, loan_no) VALUES ('yogiraj', 1), ('prithvi', 2), ('pushkaraj', 3), ('mosin', 4), ('amaan', 5), ('raman', 6), ('vedant', 7), ('aditya', 8), ('balaji', 9), ('govind', 10);
+
+select * from Borrower;
+
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
+Q1)
+
+CREATE VIEW view1 AS SELECT b.cust_name, l.branch_name FROM Borrower b, Loan l WHERE b.loan_no = l.loan_no AND l.branch_name = 'Deccan' GROUP BY b.cust_name;
+
+SELECT * FROM view1;
+
++-----------+-------------+
+| cust_name | branch_name |
++-----------+-------------+
+| yogiraj   | Deccan      |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+
+----------------------------------------------------------------------------
+
+Q2)
+
+CREATE VIEW View2 AS SELECT Branch.branch_name, Branch.branch_city FROM Branch;
+
+SELECT * FROM View2;
+
++-------------+-------------+
+| branch_name | branch_city |
++-------------+-------------+
+| Deccan      | Pune        |
+| Dhankawadi  | Pune        |
+| Dhayari     | Pune        |
+| Hadapsar    | Pune        |
+| Katraj      | Pune        |
+| Kondhwa     | Pune        |
+| Kothrud     | Pune        |
+| KP          | Pune        |
+| Sinhgad     | Pune        |
+| Warje       | Pune        |
++-------------+-------------+
+10 rows in set (0.00 sec)
+
+INSERT INTO View2 VALUES ("Swargate", "Pune"), ("Mumbai_Uni", "Mumbai"), ("CBI Bombay", "Mumbai"), ("Bombay Clg", "Mumbai");
+
+DELETE FROM View2 WHERE branch_name LIKE "%Bombay";
+
+UPDATE View2 SET branch_name = "JUHU Beach" WHERE branch_name LIKE "%Uni";
+
+SELECT * FROM View2;
+
++-------------+-------------+
+| branch_name | branch_city |
++-------------+-------------+
+| Bombay Clg  | Mumbai      |
+| Deccan      | Pune        |
+| Dhankawadi  | Pune        |
+| Dhayari     | Pune        |
+| Hadapsar    | Pune        |
+| JUHU Beach  | Mumbai      |
+| Katraj      | Pune        |
+| Kondhwa     | Pune        |
+| Kothrud     | Pune        |
+| KP          | Pune        |
+| Sinhgad     | Pune        |
+| Swargate    | Pune        |
+| Warje       | Pune        |
++-------------+-------------+
+13 rows in set (0.00 sec)
+
+----------------------------------------------------------------------------
+
+Q3)
+
+
+CREATE VIEW View3 AS SELECT d.cust_name, b.loan_no from Depositor d LEFT JOIN Borrower b ON d.cust_name = b.cust_name;
+
+
+select * from view3;
+
+| cust_name | loan_no |
++-----------+---------+
+| aditya    |       8 |
+| amaan     |       5 |
+| balaji    |       9 |
+| govind    |      10 |
+| mosin     |       4 |
+| prithvi   |       2 |
+| pushkaraj |       3 |
+| raman     |       6 |
+| vedant    |       7 |
+| yogiraj   |       1 |
++-----------+---------+
+10 rows in set (0.00 sec)
+
+
+----------------------------------------------------------------------------
+
+Q4)
+
+
+create view view4 as select d.* from depositor d;
+
+select * from view4;
+
++-----------+--------+
+| cust_name | acc_no |
++-----------+--------+
+| yogiraj   |      1 |
+| prithvi   |      2 |
+| pushkaraj |      3 |
+| mosin     |      4 |
+| amaan     |      5 |
+| raman     |      6 |
+| vedant    |      7 |
+| aditya    |      8 |
+| balaji    |      9 |
+| govind    |     10 |
++-----------+--------+
+10 rows in set (0.00 sec)
+
+
+----------------------------------------------------------------------------
+
+
+Q5)
+
+
+create view view5 as select b.* from borrower b;
+
+select * from view5;
+
++-----------+---------+
+| cust_name | loan_no |
++-----------+---------+
+| yogiraj   |       1 |
+| prithvi   |       2 |
+| pushkaraj |       3 |
+| mosin     |       4 |
+| amaan     |       5 |
+| raman     |       6 |
+| vedant    |       7 |
+| aditya    |       8 |
+| balaji    |       9 |
+| govind    |      10 |
++-----------+---------+
+10 rows in set (0.00 sec)
+
+
+----------------------------------------------------------------------------
+
+
+Q6)
+
+
+create view view6 as select view4.*, view5.loan_no from view4 LEFT JOIN view5 ON view4.cust_name = view5.cust_name;
+
+select * from view6;
+
++-----------+--------+---------+
+| cust_name | acc_no | loan_no |
++-----------+--------+---------+
+| yogiraj   |      1 |       1 |
+| prithvi   |      2 |       2 |
+| pushkaraj |      3 |       3 |
+| mosin     |      4 |       4 |
+| amaan     |      5 |       5 |
+| raman     |      6 |       6 |
+| vedant    |      7 |       7 |
+| aditya    |      8 |       8 |
+| balaji    |      9 |       9 |
+| govind    |     10 |      10 |
++-----------+--------+---------+
+10 rows in set (0.00 sec)
+
+
+----------------------------------------------------------------------------
+
+
+CREATE UNIQUE INDEX indx ON Customer (cust_name);
+
+
+SELECT table_name, index_name, column_name FROM information_schema.st
+atistics WHERE table_schema = 'banksystem' AND table_name = 'Customer';
+
+
+
+----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

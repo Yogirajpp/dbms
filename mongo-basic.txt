@@ -1,0 +1,190 @@
+
+--------------------------create database-----------------------------------
+
+
+use databaseName
+
+
+-------------------------create collection----------------------------------
+
+
+db.createCollection("collectionName")
+
+
+----------------------insert datab (insertOne)------------------------------
+
+
+db.collectionName.insertOne({
+	key31: value31,
+	key2: "value2",		--- for string
+	key3: {
+		key31: value31,
+		key32: value32,
+	}
+	key4: ['value41', 'value42', 'value43'],
+	key5: value5
+})
+
+
+-------------------insert data (insertMany)---------------------------------
+
+
+db.collectionName.insertMany([
+	{
+		key11: value11,
+		key12: value12,
+		key13: value13,
+	},
+
+	{
+		key21: value21,
+		key22: value22,
+		key23: value23,
+	},
+
+	{
+		key31: value31,
+		key32: value32,
+		key33: value33,
+	}
+])
+
+
+
+-------------------find data (find all)---------------------------------
+
+
+db.collectionName.find()
+
+
+-------------------find data (findOne)---------------------------------
+
+db.collectionName.findOne()   ---it will return the first document it finds
+
+db.collectionName.find( {key1: "value1"} )
+
+db.collectionName.find( {key1: 1, key2: 1, key3: 1} )
+
+            -----We use a 1 to include a field and 0 to exclude a field
+
+ ---------------------Error---------------------
+|						|
+|db.collectionName.find( {key1: 0, key2: 1} )   |
+|						|
+ -----------------------------------------------
+	-----We will get an error if we try to specify both 0 and 1 in the same object
+
+
+-----------------------update data (updateOne)------------------------------
+
+
+db.collectionName.updateOne(
+	 {p-key1: value1},          ---where you want to update
+	 {$set: {key1: value1}      ---what you want to update
+})
+
+
+----------------------update data (updateMany)------------------------------
+
+
+db.collectionName.updateMany({ 
+	{},
+	{$inc: {key: value} }
+})
+
+
+-----------------------------upsert data-----------------------------------
+
+
+db.collectionName.updateOne(
+	 {p-key1: value1},          
+	 {$set: {			
+		key1: value1		
+		key2: value2		
+		key3: value3			
+		} 
+	}
+	 { upsert: true }
+					
+)
+			----If you would like to insert the document if it is not found, you can use the upsert option.
+
+
+
+----------------------delete data (deleteOne)------------------------------
+
+
+
+
+db.collectionName.deleteOne ( { key: value } )
+
+
+----------------------delete data (deleteMany)------------------------------
+
+
+db.collectionName.deleteMany ( { key: value } )
+
+
+------------------------Query Operators-------------------------------------
+
+Comparison 
+
+$eq: Values are equal
+$ne: Values are not equal
+$gt: Value is greater than another value
+$gte: Value is greater than or equal to another value
+$lt: Value is less than another value
+$lte: Value is less than or equal to another value
+$in: Value is matched within an array
+
+Logical
+
+
+$and: Returns documents where both queries match
+$or: Returns documents where either query matches
+$nor: Returns documents where both queries fail to match
+$not: Returns documents where the query does not match
+
+
+-----------------------Update Operators-------------------------------------
+
+
+
+Fields
+
+$currentDate: Sets the field value to the current date
+$inc: Increments the field value
+$rename: Renames the field
+$set: Sets the value of a field
+$unset: Removes the field from the document
+
+
+
+Array
+
+$addToSet: Adds distinct elements to an array
+$pop: Removes the first or last element of an array
+$pull: Removes all elements from an array that match the query
+$push: Adds an element to an array
+
+
+
+
+----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

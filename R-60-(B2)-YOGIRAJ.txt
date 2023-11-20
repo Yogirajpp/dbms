@@ -1,0 +1,268 @@
+
+----------------------------------------------------------------------------
+                                 AGGREGATION
+----------------------------------------------------------------------------
+
+Q1)
+
+db.Employee.aggregate([
+    {
+        $group: {
+            _id: "$Designation",
+            totalSalary: { $sum: "$Salary" }
+        }
+    },
+    {
+        $match: {
+            totalSalary: { $gt: 200000 }
+        }
+    }
+])
+
+
+
+Q2)
+
+db.Employee.aggregate([
+    {
+        $match: {
+            Designation: "DBA"
+        }
+    },
+    {
+        $group: {
+            _id: "$Address.City",
+            totalSalary: { $sum: "$Salary" }
+        }
+    }
+])
+
+
+Q3)
+
+db.Employee.aggregate([
+    {
+        $match: {
+            Designation: "DBA"
+        }
+    },
+    {
+        $group: {
+            _id: "$CompanyName",
+            totalSalary: { $sum: "$Salary" }
+        }
+    }
+])
+
+
+
+Q4)
+
+db.Employee.aggregate([
+    {
+        $project: {
+            _id: 1,
+            Name: {
+                $toUpper: "$Name"
+            }
+        }
+    },
+    {
+        $sort: {
+            Name: 1
+        }
+    }
+])
+
+
+Q5)
+
+db.Employee.aggregate([
+    {
+        $group: {
+            _id: null,
+            count: { $sum: 1 }
+        }
+    }
+])
+
+
+Q6)
+
+db.Employee.aggregate([
+    {
+        $group: {
+            _id: "$Designation",
+            AvgSal: { $avg: "$Salary" }
+        }
+    },
+    {
+        $sort: {
+            AvgSal: 1
+        }
+    }
+])
+
+
+Q7)
+
+db.Employee.aggregate([
+    {
+        $match: {
+            "Name.FName": "Swapnil"
+        }
+    },
+    {
+        $unwind: "$Expertise"
+    },
+    {
+        $project: {
+            _id: 0,
+            Expertise: 1
+        }
+    }
+])
+
+
+Q8)
+
+db.Employee.aggregate([
+    {
+        $unwind: "$Expertise"
+    },
+    {
+        $group: {
+            _id: "$Expertise",
+            totalSum: { $sum: "$Salary" }
+        }
+    }
+])
+
+Q9)
+
+
+db.Employee.aggregate([
+    {
+        $match: {
+            "Address.City": "Pune"
+        }
+    },
+    {
+        $group: {
+            _id: null,
+            Designations: { $addToSet: "$Designation" }
+        }
+    }
+])
+
+
+Q10)
+
+db.Employee.aggregate([
+    {
+        $group: {
+            _id: "$CompanyName",
+            maxSalary: { $max: "$Salary" },
+            minSalary: { $min: "$Salary" }
+        }
+    }
+])
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------
+                                   INDEXING
+----------------------------------------------------------------------------
+
+
+
+
+
+
+
+Q1)
+
+db.Employee.createIndex({ Designation: 1 })
+
+Q2)
+
+db.Employee.createIndex({ Name: 1, Age: -1 })
+
+Q3)
+
+db.Employee.createIndex({ "Expertise": 1 })
+
+Q4)
+
+db.Employee.getIndexes()
+
+Q5)
+
+
+db.Employee.dropIndex({Designation:1});
+
+
+
+db.Employee.getIndexes();
+
+
+Q6)
+
+
+
+db.Employee.dropIndex("Designation_1")
+
+
+Q7)
+
+
+db.Employee.dropIndexes();
+
+
+db.Employee.getIndexes();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

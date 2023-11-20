@@ -1,0 +1,872 @@
+#1-	PRINT HELLO WORLD
+SQL> DECLARE
+  2     message varchar2(20) := 'Hello World!';
+  3  BEGIN
+  4     dbms_output.put_line(message);
+  5  END;
+  6  /
+Hello World!
+
+###################################################################################################
+
+#2-	CREATING SUBTYPES AND USING THEM
+SQL> DECLARE
+  2     SUBTYPE name IS CHAR(20);
+  3     SUBTYPE message IS VARCHAR2(30);
+  4     salutation name;
+  5     greeting message;
+  6  BEGIN
+  7     salutation := 'Prithvi';
+  8     greeting := 'welcome to the world of PL/SQL';
+  9     dbms_output.put_line('Hello' || salutation || greeting);
+ 10  END;
+ 11  /
+Hello Prithvi welcome to the world of PL/SQL
+
+###################################################################################################
+
+#3-	
+SQL> DECLARE
+  2     a integer := 10;
+  3     b integer := 20;
+  4     c integer;
+  5     f real;
+  6  BEGIN
+  7     c := a+b;
+  8     dbms_output.put_line('the sum is:' ||C);
+  9     f := 70.0/3.0;
+ 10     dbms_output.put_line('the division yields:' ||f);
+ 11  END;
+ 12  /
+the sum is:30
+the division yields:23.33333333333333333333333333333333333333
+
+###################################################################################################
+
+#4-
+
+SQL> CREATE TABLE CUSTOMERS(
+  2     ID INT NOT NULL,
+  3     NAME VARCHAR(20) NOT NULL,
+  4     AGE INT NOT NULL,
+  5     ADDRESS CHAR(25),
+  6     SALARY DECIMAL(18,2),
+  7     PRIMARY KEY (ID));
+
+Table created.
+
+
+SQL> INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY)
+  2  VALUES (1,'Raj',23,'Pune',2000.00);
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY)
+  2  VALUES (2,'Akbar',32,'Delhi',8500.00);
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY)
+  2  VALUES (3,'Tipu',26,'West Bengal',9000.00);
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY)
+  2  VALUES (4,'Ashok',45,'UP',12000.00);
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY)
+  2  VALUES (5,'Hardik',34,'Mumbai',1200.00);
+
+1 row created.
+
+SQL> INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY)
+  2  VALUES (6,'Komal',24,'Mumbai',11000.00);
+
+1 row created.
+
+SQL> SELECT * FROM CUSTOMERS;
+
+        ID NAME                        AGE ADDRESS                       SALARY
+---------- -------------------- ---------- ------------------------- ----------
+         1 Raj                          23 Pune                            2000
+         2 Akbar                        32 Delhi                           8500
+         3 Tipu                         26 West Bengal                     9000
+         4 Ashok                        45 UP                             12000
+         5 Hardik                       34 Mumbai                          1200
+         6 Komal                        24 Mumbai                         11000
+
+6 rows selected.
+
+SQL> DECLARE
+  2     c_id customers.id%type := 1;
+  3     c_name customers.name%type;
+  4     c_addr customers.address%type;
+  5     C_sal customers.salary%type;
+  6  BEGIN
+  7     SELECT name,address,salary INTO c_name,c_addr,c_sal
+  8     FROM customers
+  9     WHERE id = c_id;
+ 10     dbms_output.put_line ('Customer' || c_name || 'from' || c_addr || 'earns' || c_sal);
+ 11  END;
+ 12  /
+Customer Raj from Pune earns 2000
+
+###################################################################################################
+
+#5-	LEARN LOOPS
+
+SQL> DECLARE
+  2      i integer(1);
+  3      j integer(1);
+  4  BEGIN
+  5     <<outer_loop>>
+  6     FOR i IN 1..3 LOOP
+  7             <<inner_loop>>
+  8             FOR j IN 1..4 LOOP
+  9             dbms_output.put_line ('i is:' || i || 'and j is:' ||j);
+ 10             END loop inner_loop;
+ 11     END loop outer_loop;
+ 12  END;
+ 13  /
+i is:1and j is:1
+i is:1and j is:2
+i is:1and j is:3
+i is:1and j is:4
+i is:2and j is:1
+i is:2and j is:2
+i is:2and j is:3
+i is:2and j is:4
+i is:3and j is:1
+i is:3and j is:2
+i is:3and j is:3
+i is:3and j is:4
+
+###################################################################################################
+
+#6-	LEARN ARRAY/VARRAY ---EXECUTION FAILED HERE!!
+
+SQL> DECLARE
+  2     TYPE namesarray IS VARRAY(5) OF VARCHAR2(30);
+  3     TYPE grades IS VARRAY(5) OF INTEGER;
+  4     names namesarray;
+  5     marks grades;
+  6     total integer;
+  7  BRGIN
+  8     names := namesarray('AAA','BBB','CCC','DDD','FFF');
+  9     marks := grades(98,78,67,89,87);
+ 10     total := names.count;
+ 11     dbms_output.put_line ('Total' || total || 'students');
+ 12     FOR i IN 1..total LOOP
+ 13             dbms_output.put_line ('Student:' || names(i) || 'got marks:' || marks(i));
+ 14     END LOOP;
+ 15  END;
+ 16  /
+
+###################################################################################################
+
+#7-	PL/SQL--PROCEDURES
+
+SQL> CREATE OR REPLACE PROCEDURE greetings
+  2  AS
+  3  BEGIN
+  4     dbms_output.put_line ('Hello World!');
+  5  END;
+  6  /
+
+Procedure created.
+
+SQL> EXECUTE greetings;
+Hello World!
+
+PL/SQL procedure successfully completed.
+
+SQL> BEGIN
+  2     greetings;
+  3  END;
+  4  /
+Hello World!
+
+###################################################################################################
+
+#8-	USING IN, OUT in PROCEDURE & CALLING A PROCEDURE
+
+SQL> DECLARE
+  2     a NUMBER;
+  3     b NUMBER;
+  4     c NUMBER;
+  5     PROCEDURE findMin (x IN NUMBER, y IN NUMBER, Z OUT NUMBER)
+  6     IS
+  7  		BEGIN
+  8  		IF x<y THEN
+  9     		z := x;
+ 10  		ELSE
+ 11     		z := y;
+ 12  		END IF;
+ 13  	END;
+ 14  BEGIN
+ 15     a:=23;
+ 16     b:=34;
+ 17     findMin(a,b,c);
+ 18     dbms_output.put_line ('Min between 23,34 is:' || c);
+ 19  END;
+ 20  /
+Min between 23,34 is:23
+
+###################################################################################################
+
+#9-	SQUARE A NUMBER [USING SINGLE VARIABLE]
+
+SQL> DECLARE
+  2     a NUMBER;
+  3     PROCEDURE sqNo(x IN OUT NUMBER)
+  4     IS
+  5     BEGIN
+  6             x := x * x;
+  7     END;
+  8  BEGIN
+  9     a:=23;
+ 10     sqNo(a);
+ 11     dbms_output.put_line ('square of number 23 is:'||a);
+ 12  END;
+ 13  /
+square of number 23 is:529
+
+###################################################################################################
+
+#10-	creating function and calling it.
+
+SQL> SELECT * FROM CUSTOMERS;
+
+        ID NAME                        AGE ADDRESS                       SALARY
+---------- -------------------- ---------- ------------------------- ----------
+         1 Raj                          23 Pune                            2000
+         2 Akbar                        32 Delhi                           8500
+         3 Tipu                         26 West Bengal                     9000
+         4 Ashok                        45 UP                             12000
+         5 Hardik                       34 Mumbai                          1200
+         6 Komal                        24 Mumbai                         11000
+
+6 rows selected.
+
+SQL> CREATE OR REPLACE FUNCTION totalCustomers
+  2  RETURN number IS
+  3     total NUMBER(2) := 0;
+  4  BEGIN
+  5     SELECT COUNT(*) INTO total
+  6     FROM CUSTOMERS;
+  7
+  8     RETURN total;
+  9  END;
+ 10  /
+
+Function created.
+
+SQL> DECLARE
+  2      c NUMBER(2);
+  3  BEGIN
+  4     c := totalCustomers();
+  5     dbms_output.put_line ('Total no. of Customers:'||c);
+  6  END;
+  7  /
+Total no. of Customers:6
+
+###################################################################################################
+
+#11-	 Declaring, Defining, and Invoking a Simple PL/SQL Function that computes and returns the 	 maximum of two values.
+
+SQL> DECLARE
+  2     a NUMBER;
+  3     b NUMBER;
+  4     c NUMBER;
+  5     FUNCTION findMax(x IN NUMBER, y IN NUMBER)
+  6     RETURN NUMBER
+  7     IS
+  8             z NUMBER;
+  9
+ 10     BEGIN
+ 11     	IF x>y THEN
+ 12             	z:=x;
+ 13     	ELSE
+ 14             	z:=y;
+ 15     	END IF;
+ 16     	RETURN z;
+ 17     END;
+ 18
+ 19  BEGIN
+ 20     a:=23;
+ 21     b:=45;
+ 22     c:=findMax(a,b);
+ 23     dbms_output.put_line('max no. between 23,45 is:'||c);
+ 24  END;
+ 25  /
+max no. between 23,45 is:45
+
+###################################################################################################
+
+#12-	INCREMENT SALARY OF CUSTOMERS BY 500
+
+SQL> SELECT * FROM CUSTOMERS;
+
+        ID NAME                        AGE ADDRESS                       SALARY
+---------- -------------------- ---------- ------------------------- ----------
+         1 Raj                          23 Pune                            2000
+         2 Akbar                        32 Delhi                           8500
+         3 Tipu                         26 West Bengal                     9000
+         4 Ashok                        45 UP                             12000
+         5 Hardik                       34 Mumbai                          1200
+         6 Komal                        24 Mumbai                         11000
+
+6 rows selected.
+
+SQL> DECLARE
+  2     total_rows NUMBER(2);
+  3  BEGIN
+  4     UPDATE CUSTOMERS
+  5     SET SALARY = SALARY + 500;
+  6     IF SQL%FOUND THEN
+  7             total_rows := SQL%ROWCOUNT;
+  8             dbms_output.put_line(total_rows||' customers selected');
+  9
+ 10     ELSIF SQL%NOTFOUND THEN
+ 11              dbms_output.put_line('no customers selected');
+ 12     END IF;
+ 13  END;
+ 14  /
+6 customers selected
+
+PL/SQL procedure successfully completed.
+
+SQL> SELECT * FROM CUSTOMERS;
+
+        ID NAME                        AGE ADDRESS                       SALARY
+---------- -------------------- ---------- ------------------------- ----------
+         1 Raj                          23 Pune                            2500
+         2 Akbar                        32 Delhi                           9000
+         3 Tipu                         26 West Bengal                     9500
+         4 Ashok                        45 UP                             12500
+         5 Hardik                       34 Mumbai                          1700
+         6 Komal                        24 Mumbai                         11500
+
+6 rows selected.
+
+###################################################################################################
+
+#13-	EXPLICIT CURSOR
+
+SQL> DECLARE
+  2     c_id customers.id%type;
+  3     c_name customers.name%type;
+  4     c_addr customers.address%type;
+  5     CURSOR c_customers IS
+  6             SELECT id,name,address FROM customers;
+  7  BEGIN
+  8     OPEN c_customers;
+  9     LOOP
+ 10     FETCH c_customers INTO c_id,c_name,c_addr;
+ 11             EXIT WHEN c_customers%NOTFOUND;
+ 12             dbms_output.put_line (c_id||' '||c_name||' '||c_addr);
+ 13     END LOOP;
+ 14     CLOSE c_customers;
+ 15  END;
+ 16  /
+1 Raj Pune
+2 Akbar Delhi
+3 Tipu West Bengal
+4 Ashok UP
+5 Hardik Mumbai
+6 Komal Mumbai
+
+###################################################################################################
+
+#14-	Write a PL/SQL code block to calculate the area of a circle for a
+	value of radius varying from 5 to 9. Store the radius and the
+	corresponding values of calculated area in an empty table named
+	areas, consisting of two columns, radius and area.
+
+SQL> CREATE TABLE CIRCLE(
+  2     radius NUMBER,
+  3     area NUMBER);
+
+Table created.
+
+SQL> DECLARE
+  2     v_radius NUMBER;
+  3     v_area NUMBER;
+  4  BEGIN
+  5     FOR v_radius IN 5..9 LOOP
+  6             v_area := 3.14 * v_radius * v_radius;
+  7             INSERT INTO CIRCLE(radius,area)
+  8             VALUES (v_radius,v_area);
+  9             dbms_output.put_line ('radius: '||v_radius||' area: '||v_area);
+ 10     END LOOP;
+ 11  END;
+ 12  /
+radius: 5 area: 78.5
+radius: 6 area: 113.04
+radius: 7 area: 153.86
+radius: 8 area: 200.96
+radius: 9 area: 254.34
+
+###################################################################################################
+
+#15- 	Write a Unnamed PL/SQL of code for the following requirements:-
+	Schema:
+ 		Borrower (Roll_no, Name, DateofIssue, NameofBook, Status)
+ 		Fine (Roll_no,Date,Amt)
+	Accept roll_no & name of book from user.
+	Check the number of days (from date of issue).
+	1. If days are between 15 to 30 then fine amounts will be Rs 5
+	per day.
+	2. If no. of days>30, per day fine will be Rs 50 per day & for
+	days less than 30, Rs. 5 per day.
+	3. After submitting the book, status will change from I to R.
+	4. If condition of fine is true, then details will be stored into
+	fine table.
+
+-- Create Borrower table
+CREATE TABLE Borrower (
+  Rollin NUMBER PRIMARY KEY,
+  Name VARCHAR2(50),
+  DateofIssue DATE,
+  NameofBook VARCHAR2(50),
+  Status CHAR(1)
+);
+
+-- Create Fine table
+CREATE TABLE Fine (
+  Roll_no NUMBER,
+  Date_R DATE,
+  Amt NUMBER,
+  FOREIGN KEY (Roll_no) REFERENCES Borrower(Roll_no)
+);
+
+
+DECLARE 
+	v_rollno NUMBER;
+	v_date_of_issue DATE;
+	v_current_date DATE := SYSDATE;
+	v_status CHAR(1);
+	v_name_of_book VARCHAR2(50);
+	v_fine_amt NUMBER;
+	v_days_late NUMBER;
+
+	v_execption_msg VARCHAR2(200);
+
+BEGIN
+	v_rollno := &enter_roll_no;
+	v_name_of_book := '&enter_name_of_book';
+	
+	SELECT DateOfIssue, Status
+	INTO v_date_of_issue, v_status
+	FROM Borrower
+	WHERE  = v_rollno AND NameofBook = v_name_of_book ;
+	
+	v_days_late := v_current_date - v_date_of_issue;
+	
+	IF v_days_late > 15 AND v_days_late < 30 THEN
+		v_fine_amt := v_days_late * 5;
+	ELSIF v_days_late > 30 THEN
+		v_fine_amt := 5 * 30;
+		v_fine_amt := v_fine_amt + (50 * (v_days_late - 30));
+	ELSE 
+		v_fine_amt := 0;
+	END IF;
+
+	UPDATE Borrower
+	SET Status = 'R'
+	WHERE Rollno = v_rollno AND NameOfBook = v_name_of_book;
+
+	IF v_fine_amt > 0 THEN
+		INSERT INTO Fine(Roll_no,Date_R,Amt)
+		VALUES (v_rollno, SYSDATE, v_fine_amt);
+		
+		dbms_output.put_line('Fine Details:');
+    		dbms_output.put_line('Roll_no: ' || v_roll_no);
+    		dbms_output.put_line('Name_of_Book: ' || v_name_of_book);
+   		dbms_output.put_line('Days Late: ' || v_days_late);
+    		dbms_output.put_line('Fine Amount: Rs. ' || v_fine_amount);
+    		dbms_output.put_line('Status: ' || v_status);
+	ELSE 
+		dbms_output.put_line('NO fine for this book returned');
+	END IF;
+END;
+/
+
+###################################################################################################
+			"SOLUTION NOT PERFECT"
+
+#16- 	Write a PL/SQL block of code using Cursor that will merge the
+	data available in the newly created table N_Roll Call with the
+	data available in the table O_RollCall. If the data in the first
+	table already exist in the second table then that data should be
+	skipped.
+
+CREATE TABLE O_RollCall(
+	rollno NUMBER,
+	name VARCHAR2(30));
+
+INSERT INTO O_RollCall (rollno,name)
+VALUES (1,'AAA');
+
+SQL> SELECT * FROM O_RollCall;
+    ROLLNO NAME
+---------- ------------------------------
+         1 AAA
+         2 BBB
+         3 CCC
+         4 DDD
+         5 EEE
+         6 FFF
+         7 GGG
+         8 HHH
+         9 III
+        10 JJJ
+
+CREATE TABLE N_RollCall(
+	rollno NUMBER,
+	name VARCHAR2(30));
+
+INSERT INTO N_RollCall (rollno,name) 
+VALUES (1,'AAA');
+INSERT INTO N_RollCall (rollno,name) 
+VALUES (3,'CCC');
+INSERT INTO N_RollCall (rollno,name) 
+VALUES (5,'EEE');
+
+DECLARE
+  CURSOR c_n_rollcall IS
+    SELECT * FROM N_RollCall;
+
+  v_n_roll NUMBER;
+  v_n_name VARCHAR2(50);
+
+  v_exists NUMBER;
+
+BEGIN
+  FOR n_rec IN c_n_rollcall
+  LOOP
+    v_n_roll := n_rec.rollno;
+    v_n_name := n_rec.name;
+    
+    SELECT COUNT(*)
+    INTO v_exists
+    FROM O_RollCall
+    WHERE rollno = v_n_roll AND name = v_n_name;  
+   
+    IF v_exists = 0 THEN
+      INSERT INTO N_RollCall (rollno, name)
+      VALUES (v_n_roll, v_n_name);  -- Adjust columns based on your table structure
+    ELSE
+      
+      DBMS_OUTPUT.PUT_LINE('Data already exists for Roll: ' || v_n_roll || ', Name: ' || v_n_name 			    || '. Skipping...');
+    END IF;
+  END LOOP;
+
+  COMMIT;
+
+  DBMS_OUTPUT.PUT_LINE('Merge operation completed successfully.');
+
+EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('An error occurred: ' || SQLCODE || ' - ' || SQLERRM);
+END;
+/
+
+###################################################################################################
+
+#17- 	Write a PL/SQL block for following requirements and handle the
+	exceptions. Roll no. of students will be entered by the user.
+	Attendance of roll no. entered by user will be checked in the
+	Stud table. If attendance is less than 75% then display the
+	message “Term not granted” and set the status in stud table as
+	“Detained”. Otherwise display message “Term granted” and set the
+	status in stud table as “Not Detained”
+	 Student (Roll, Name, Attendance ,Status)
+
+SQL> create table student(
+ 	roll NUMBER,
+ 	name VARCHAR2(30),
+ 	attendance NUMBER,
+ 	status VARCHAR2(20) NULL);
+	
+SQL> select * from student;
+
+      ROLL NAME    ATTENDANCE STATUS
+---------- ------- ---------- --------
+         1 AAA     78
+         2 bbb     56
+         3 CCC     89
+         4 DDD     45
+         5 EEE     75
+         6 FFF     76
+         7 ggg     80
+
+
+ DECLARE
+      	v_roll student.roll%type;
+      	v_attendance student.attendance%type;
+      	v_status student.status%type;
+ BEGIN
+      	v_roll := &enter_roll_no;
+  
+      	SELECT attendance,status 
+	INTO v_attendance, v_status
+      	FROM student
+      	WHERE roll = v_roll;
+	
+	IF v_attendance < 75 THEN
+		dbms_output.put_line ('Term not Granted');
+		UPDATE student
+		SET status = 'Detained' 
+		WHERE roll = v_roll;
+	ELSE 
+		dbms_output.put_line ('Term Granted');
+		UPDATE student
+		SET status = 'Not Detained'
+		WHERE roll = v_roll;
+	END IF;
+	
+	commit;
+END;
+/
+
+      ROLL NAME    ATTENDANCE STATUS
+---------- ------- ---------- ---------------
+         1 AAA             78 Not Detained
+         2 bbb             56 Detained
+         3 CCC             89 Not Detained
+         4 DDD             45 Detained
+         5 EEE             75 Not Detained
+         6 FFF             76 Not Detained
+         7 ggg             80 Not Detained
+
+###################################################################################################
+
+#18- 	Write a PL/SQL Block to increase the salary of employees by 10%
+	of existing salary, who are having salary less than average
+	salary of organization, whenever such salary updates takes place,
+	a record for same is maintained in the increment_salary table.
+	emp(emp_no, salary)
+	increment_salary(emp_no, salary)
+
+CREATE TABLE emp (
+	emp_no NUMBER,
+	salary NUMBER);
+INSERT INTO emp (emp_no, salary)
+VALUES (1,3000);
+INSERT INTO emp (emp_no, salary)
+VALUES (2,3200);
+INSERT INTO emp (emp_no, salary)
+VALUES (3,4000);
+INSERT INTO emp (emp_no, salary)
+VALUES (4,6000);
+INSERT INTO emp (emp_no, salary)
+VALUES (5,4300);
+INSERT INTO emp (emp_no, salary)
+VALUES (6,5600);
+INSERT INTO emp (emp_no, salary)
+VALUES (7,4700);
+INSERT INTO emp (emp_no, salary)
+VALUES (8,5000);
+INSERT INTO emp (emp_no, salary)
+VALUES (9,4100);
+INSERT INTO emp (emp_no, salary)
+VALUES (10,3500);
+
+CREATE TABLE increment_salary(
+	emp_no NUMBER,
+	salary NUMBER);
+
+DECLARE 
+	CURSOR c_employee IS
+	SELECT emp_no,salary
+	FROM emp
+	WHERE salary < (SELECT AVG(salary) FROM emp);
+
+	v_emp_no NUMBER;
+	v_salary NUMBER;
+	v_inc_amt NUMBER;
+
+BEGIN
+	OPEN c_employee;
+
+	LOOP
+
+	FETCH c_employee INTO v_emp_no, v_salary;
+	
+	EXIT WHEN c_employee%notfound;
+
+	v_inc_amt := 0.10 * v_salary;
+	
+	UPDATE emp
+	SET salary = salary + v_inc_amt
+	WHERE emp_no = v_emp_no;
+	
+	INSERT INTO increment_salary(emp_no,salary)
+	VALUES (v_emp_no,v_inc_amt);
+
+	--DBMS_OUTPUT.PUT_LINE('Salary updated for Employee ' || v_emp_no || '. New Salary: ' || 					(v_salary + v_inc_amt));
+	dbms_output.put_line('salary of '||v_emp_no||'was incremented by:$'||v_inc_amt||' TOTAL: $'||(v_salary + v_inc_amt))
+	END LOOP;
+	CLOSE c_employee;
+	
+	commit;
+	DBMS_OUTPUT.PUT_LINE('Salaries updated successfully.');
+
+END;
+/
+
+###################################################################################################
+
+#19- 	Write a Stored Procedure namely proc_Grade for the categorization
+	of student. If marks scored by students in examination is <=1500
+	and marks>=990 then student will be placed in distinction
+	category if marks scored are between 989 and 900 category is
+	first class, if marks 899 and 825 category is Higher Second
+	Class.
+	Write a PL/SQL block for using procedure created with above
+	requirement.
+	Stud_Marks(name, total_marks),
+	Result(Roll,Name, Class)
+
+CREATE TABLE Stud_Marks(
+	name VARCHAR2(50),
+	total_marks NUMBER);
+
+CREATE TABLE Result(
+	Roll NUMBER PRIMARY KEY,
+	Name VARCHAR2(50),
+	Class VARCHAR2(50)); 
+
+INSERT INTO Stud_Marks(name,total_marks)
+VALUES ('AAA',1400);
+INSERT INTO Stud_Marks(name,total_marks)
+VALUES ('BBB',900);
+INSERT INTO Stud_Marks(name,total_marks)
+VALUES ('CCC',700);
+INSERT INTO Stud_Marks(name,total_marks)
+VALUES ('DDD',1100);
+INSERT INTO Stud_Marks(name,total_marks)
+VALUES ('EEE',1320);
+INSERT INTO Stud_Marks(name,total_marks)
+VALUES ('FFF',1050);
+INSERT INTO Stud_Marks(name,total_marks)
+VALUES ('GGG',800);
+INSERT INTO Stud_Marks(name,total_marks)
+VALUES ('HHH',989);
+INSERT INTO Stud_Marks(name,total_marks)
+VALUES ('III',950);
+INSERT INTO Stud_Marks(name,total_marks)
+VALUES ('JJJ',1200);
+
+UPDATE Stud_Marks
+SET rollno = 1
+WHERE 
+
+CREATE OR REPLACE PROCEDURE proc_Grade
+(v_rollno IN NUMBER,
+ p_rollno OUT stud_marks.rollno%type,
+ p_name OUT stud_marks.name%type, 
+ p_total_marks OUT stud_marks.total_marks%type)
+AS 
+
+BEGIN
+	SELECT roll
+	
+	IF p_total_marks<=1500 AND p_total_marks>=990 THEN
+		v_class := 'Distinction';
+	ELSIF p_total_marks<=989 AND p_total_marks>=900 THEN
+		v_class := 'First Class';
+	ELSIF p_total_marks<=899 AND p_total_marks>=825 THEN
+		v_class := 'Higher Secondary Class';
+	ELSE
+		v_class := 'Class Not Specified';
+	END IF;
+
+	COMMIT;
+
+	v_roll := &enter_roll_no;
+	
+	INSERT INTO Result(Roll,Name,Class)
+	VALUE (v_roll,p_name,v_class);
+END proc_Grade;
+/
+
+DECLARE
+  v_student_name VARCHAR2(50) := 'John Doe';
+  v_total_marks NUMBER := 950;
+BEGIN
+  
+  proc_Grade(p_name => v_student_name, p_total_marks => v_total_marks);
+
+  DBMS_OUTPUT.PUT_LINE('Result inserted for ' || v_student_name);
+EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('An error occurred: ' || SQLCODE || ' - ' || SQLERRM);
+END;
+/
+
+###################################################################################################
+
+#20-	Write a Row Level Before and After Trigger on Library table. The
+	System should keep track of the records that are being updated or
+	deleted. The old value of updated or deleted records should be
+	added in Library_Audit(rollno,name,dateofissue,nameofbook,status) table.
+
+--AFTER ROW LEVEL TRIGGER
+
+CREATE OR REPLACE TRIGGER TAI
+	AFTER INSERT OR DELETE OR UPDATE
+	ON LIB
+	FOR EACH ROW
+BEGIN
+	IF INSERTING THEN 
+		INSERT INTO Lib_Audit VALUES
+(:NEW.rollno,:new.name,:NEW.dateofissue,:NEW.nameofbook,:NEW.status,current_timestamp, 'INSERT');
+	
+	ELSIF UPDATING THEN
+		INSERT INTO Lib_Audit VALUES (:OLD.rollno,:OLD.name,:OLD.dateofissue,:OLD.nameofbook,:OLD.status,current_timestamp,'UPDATE');
+
+	ELSE 
+		INSERT INTO Lib_Audit VALUES (:OLD.rollno,:OLD.name,:OLD.dateofissue,:OLD.nameofbook,:OLD.status,current_timestamp,'DELETE');
+
+	END IF;
+END;
+/
+
+###################################################################################################
+
+#21-	Trigger: Create a row level trigger for the CUSTOMERS table that
+	would fire INSERT or UPDATE or DELETE operations performed on the
+	CUSTOMERS table. This trigger will display the salary difference
+	between the old values and new values.
+
+CREATE OR REPLACE TRIGGER display_salary_changes 
+BEFORE DELETE OR INSERT OR UPDATE ON customers 
+FOR EACH ROW 
+ 
+DECLARE 
+   v_old_salary number; 
+   v_new_salary number; 
+BEGIN 
+	IF INSERTING OR UPDATING THEN
+		v_old_salary := NVL(:OLD.salary,0);
+		v_new_salary := NVL(:NEW.salary,0);
+	
+		dbms_output.put_line('Salary diff: '||(v_new_salary - v_old_salary));
+	ELSE DELETING THEN
+		dbms_output.put_line('Deleting customer salary '||:OLD.salary);
+	END IF;
+END; 
+/ 
+
+
+
+
+
+
+
+
+

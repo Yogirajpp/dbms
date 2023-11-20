@@ -1,0 +1,880 @@
+use Empdb
+
+
+db.createCollection("Employee")
+
+
+db.Employee.insertOne({
+    Empid: 123,
+    Name: {
+        FName: "Yogiraj",
+        LName: "Patil"
+    },
+    CompanyName: "IBM",
+    Salary: 80000,
+    Designation: "Developer",
+    Age: 20,
+    Expertise: ["MongoDB", "Node.js", "JavaScript"],
+    DOB: "2003-02-28",
+    Email: "yogiraj@gmail.com",
+    Contact: "8208090675",
+    Address: [ 
+        {
+            Area:'Ausa Road',
+	    City:'Latur',
+	    Pin_code:413512
+        },
+        {
+            
+            Area:'Hadapsar',
+	    City:'Pune',
+	    Pin_code:411028
+        }
+    ]
+})
+
+
+
+db.Employee.insertOne({
+    Empid: 124,
+    Name: {
+        FName: "Prithviraj",
+        LName: "Mulay"
+    },
+    CompanyName: "TCS",
+    Salary: 70000,
+    Designation: "Software Engineer",
+    Age: 20,
+    Expertise: ["MongoDB", "Php", "C++"],
+    DOB: "2003-03-23",
+    Email: "prithviraj@gmail.com",
+    Contact: "1234567899",
+    Address: [
+        {
+            Area:'Viman Nagar',
+	    City:'Pune',
+	    Pin_code:411013
+        },
+        {
+            
+            Area:'Viman Nagar',
+	    City:'Pune',
+	    Pin_code:411013
+        }
+    ]
+});
+
+db.Employee.insertOne({
+    Empid: 125,
+    Name: {
+        FName: "Mosin",
+        LName: "Inamdar"
+    },
+    CompanyName: "Infosys",
+    Salary: 50000,
+    Designation: "Software Engineer",
+    Age: 19,
+    Expertise: ["Python", "Javascript", "C++"],
+    DOB: "2003-03-23",
+    Email: "mosin@gmail.com",
+    Contact: "1231231231",
+    Address: [
+        {
+            Area:'Magarpatta',
+	    City:'Pune',
+	    Pin_code:411008
+        },
+        {
+            
+            Area:'Magarpatta',
+	    City:'Pune',
+	    Pin_code:411008
+        }
+    ]
+});
+
+
+db.Employee.insertOne({
+    Empid: 126,
+    Name: {
+        FName: "Pushkaraj",
+        LName: "Chauhan"
+    },
+    CompanyName: "TCS",
+    Salary: 80000,
+    Designation: "Software Engineer",
+    Age: 21,
+    Expertise: ["Python", "Javascript", "Java"],
+    DOB: "2003-12-18",
+    Email: "pushkaraj@gmail.com",
+    Contact: "1234512345",
+    Address: [
+        {
+            Area:'Camp',
+	    City:'Pune',
+	    Pin_code:411002
+        },
+        {
+            
+            Area:'Camp',
+	    City:'Pune',
+	    Pin_code:411002
+        }
+    ]
+});
+
+db.Employee.insertOne({
+    Empid: 126,
+    Name: {
+        FName: "Amaan",
+        LName: "Shaikh"
+    },
+    CompanyName: "TCS",
+    Salary: 80000,
+    Designation: "Tester",
+    Age: 21,
+    Expertise: ["Python", "LLVM", "Java"],
+    DOB: "2003-06-21",
+    Email: "amaan@gmail.com",
+    Contact: "1234512345",
+    Address: [
+        {
+            Area:'Fatima nagar',
+	    City:'Pune',
+	    Pin_code:411004
+        },
+        {
+            
+            Area:'Fatima nagar',
+	    City:'Pune',
+	    Pin_code:411004
+        }
+    ]
+});
+
+
+db.Employee.find();
+
+
+[
+  {
+    _id: ObjectId("653d14dd4e89cebce264910f"),
+    Empid: 123,
+    Name: { FName: 'Yogiraj', LName: 'Patil' },
+    CompanyName: 'IBM',
+    Salary: 60000,
+    Designation: 'Full stack Developer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Node.js', 'JavaScript' ],
+    DOB: '2003-02-28',
+    Email: 'yogiraj@gmail.com',
+    Contact: '8208090675',
+    Address: [
+      { PAddr: 'Latur', LAddr: 'Pune' },
+      { PAddr: 'Latur', LAddr: 'Mumbai' }
+    ]
+  },
+  {
+    _id: ObjectId("653f455c4e89cebce2649110"),
+    Empid: 124,
+    Name: { FName: 'Prithviraj', LName: 'Mulay' },
+    CompanyName: 'TCS',
+    Salary: 70000,
+    Designation: 'Software Engineer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Php', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'prithviraj@gmail.com',
+    Contact: '1234567899',
+    Address: [
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 },
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45774e89cebce2649111"),
+    Empid: 125,
+    Name: { FName: 'Mosin', LName: 'Inamdar' },
+    CompanyName: 'Infosys',
+    Salary: 50000,
+    Designation: 'Software Engineer',
+    Age: 19,
+    Expertise: [ 'Python', 'Javascript', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'mosin@gmail.com',
+    Contact: '1231231231',
+    Address: [
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 },
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45b74e89cebce2649112"),
+    Empid: 126,
+    Name: { FName: 'Pushkaraj', LName: 'Chauhan' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Software Engineer',
+    Age: 21,
+    Expertise: [ 'Python', 'Javascript', 'Java' ],
+    DOB: '2003-12-18',
+    Email: 'pushkaraj@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 },
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45c54e89cebce2649113"),
+    Empid: 126,
+    Name: { FName: 'Amaan', LName: 'Shaikh' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Tester',
+    Age: 21,
+    Expertise: [ 'Python', 'LLVM', 'Java' ],
+    DOB: '2003-06-21',
+    Email: 'amaan@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 },
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 }
+    ]
+  }
+
+
+
+
+
+
+
+
+
+
+Q1)
+
+db.Employee.find({Designation:'Programmer',Salary:{$gt:30000}});
+
+[
+  {
+    _id: ObjectId("653d14dd4e89cebce264910f"),
+    Empid: 123,
+    Name: { FName: 'Yogiraj', LName: 'Patil' },
+    CompanyName: 'IBM',
+    Salary: 60000,
+    Designation: 'Full stack Developer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Node.js', 'JavaScript' ],
+    DOB: '2003-02-28',
+    Email: 'yogiraj@gmail.com',
+    Contact: '8208090675',
+    Address: [
+      { PAddr: 'Latur', LAddr: 'Pune' },
+      { PAddr: 'Latur', LAddr: 'Mumbai' }
+    ]
+  },
+  {
+    _id: ObjectId("653f455c4e89cebce2649110"),
+    Empid: 124,
+    Name: { FName: 'Prithviraj', LName: 'Mulay' },
+    CompanyName: 'TCS',
+    Salary: 70000,
+    Designation: 'Software Engineer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Php', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'prithviraj@gmail.com',
+    Contact: '1234567899',
+    Address: [
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 },
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45774e89cebce2649111"),
+    Empid: 125,
+    Name: { FName: 'Mosin', LName: 'Inamdar' },
+    CompanyName: 'Infosys',
+    Salary: 50000,
+    Designation: 'Software Engineer',
+    Age: 19,
+    Expertise: [ 'Python', 'Javascript', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'mosin@gmail.com',
+    Contact: '1231231231',
+    Address: [
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 },
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45b74e89cebce2649112"),
+    Empid: 126,
+    Name: { FName: 'Pushkaraj', LName: 'Chauhan' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Software Engineer',
+    Age: 21,
+    Expertise: [ 'Python', 'Javascript', 'Java' ],
+    DOB: '2003-12-18',
+    Email: 'pushkaraj@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 },
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45c54e89cebce2649113"),
+    Empid: 126,
+    Name: { FName: 'Amaan', LName: 'Shaikh' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Tester',
+    Age: 21,
+    Expertise: [ 'Python', 'LLVM', 'Java' ],
+    DOB: '2003-06-21',
+    Email: 'amaan@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 },
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 }
+    ]
+  }
+]
+
+Q2)
+db.Employee.update(
+    {
+        Designation: 'Tester',
+        Company_Name: 'TCS',
+        Age: 25
+    },
+    {
+        $set: {
+            Empid: 127,
+            Name: { FName: 'Someone', LName: 'New' },
+            Company_Name: 'TCS',
+            Salary: 12445,
+            Designation: 'Tester',
+            Age: 25,
+            Expertise: ['C/C++', 'Python'],
+            DOB: '01-01-2003',
+            Email: 'someoneNew@gmail.com',
+            Contact: 7548961235,
+            Address: [
+                { Area: 'Somewhere in the Pune', City: 'Pune', Pin_code: 411003 },
+                { Area: 'Somewhere in the Pune', City: 'Pune', Pin_code: 411003 }
+            ]
+        }
+    },
+    { upsert: true }
+);
+
+{
+  acknowledged: true,
+  insertedId: ObjectId("653f4646b21bddc51c17cb16"),
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 1
+}
+
+db.Employee.find();
+
+Q3)
+
+db.Employee.find({
+    $or: [
+        { age: { $lt: 30 } },
+        { Salary: { $gt: 40000 } }
+    ]
+})
+
+[
+  {
+    _id: ObjectId("653d14dd4e89cebce264910f"),
+    Empid: 123,
+    Name: { FName: 'Yogiraj', LName: 'Patil' },
+    CompanyName: 'IBM',
+    Salary: 60000,
+    Designation: 'Full stack Developer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Node.js', 'JavaScript' ],
+    DOB: '2003-02-28',
+    Email: 'yogiraj@gmail.com',
+    Contact: '8208090675',
+    Address: [
+      { PAddr: 'Latur', LAddr: 'Pune' },
+      { PAddr: 'Latur', LAddr: 'Mumbai' }
+    ]
+  },
+  {
+    _id: ObjectId("653f455c4e89cebce2649110"),
+    Empid: 124,
+    Name: { FName: 'Prithviraj', LName: 'Mulay' },
+    CompanyName: 'TCS',
+    Salary: 70000,
+    Designation: 'Software Engineer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Php', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'prithviraj@gmail.com',
+    Contact: '1234567899',
+    Address: [
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 },
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45774e89cebce2649111"),
+    Empid: 125,
+    Name: { FName: 'Mosin', LName: 'Inamdar' },
+    CompanyName: 'Infosys',
+    Salary: 50000,
+    Designation: 'Software Engineer',
+    Age: 19,
+    Expertise: [ 'Python', 'Javascript', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'mosin@gmail.com',
+    Contact: '1231231231',
+    Address: [
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 },
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45b74e89cebce2649112"),
+    Empid: 126,
+    Name: { FName: 'Pushkaraj', LName: 'Chauhan' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Software Engineer',
+    Age: 21,
+    Expertise: [ 'Python', 'Javascript', 'Java' ],
+    DOB: '2003-12-18',
+    Email: 'pushkaraj@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 },
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45c54e89cebce2649113"),
+    Empid: 126,
+    Name: { FName: 'Amaan', LName: 'Shaikh' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Tester',
+    Age: 21,
+    Expertise: [ 'Python', 'LLVM', 'Java' ],
+    DOB: '2003-06-21',
+    Email: 'amaan@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 },
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 }
+    ]
+  }
+]
+
+Q4)
+db.Employee.find( { 'Address.City' : 'Pune', 'Address.Pin_code' : 411001 } );
+
+[
+  {
+    _id: ObjectId("653d14dd4e89cebce264910f"),
+    Empid: 123,
+    Name: { FName: 'Yogiraj', LName: 'Patil' },
+    CompanyName: 'IBM',
+    Salary: 60000,
+    Designation: 'Full stack Developer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Node.js', 'JavaScript' ],
+    DOB: '2003-02-28',
+    Email: 'yogiraj@gmail.com',
+    Contact: '8208090675',
+    Address: [
+      { PAddr: 'Latur', LAddr: 'Pune' },
+      { PAddr: 'Latur', LAddr: 'Mumbai' }
+    ]
+  },
+  {
+    _id: ObjectId("653f455c4e89cebce2649110"),
+    Empid: 124,
+    Name: { FName: 'Prithviraj', LName: 'Mulay' },
+    CompanyName: 'TCS',
+    Salary: 70000,
+    Designation: 'Software Engineer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Php', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'prithviraj@gmail.com',
+    Contact: '1234567899',
+    Address: [
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 },
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45774e89cebce2649111"),
+    Empid: 125,
+    Name: { FName: 'Mosin', LName: 'Inamdar' },
+    CompanyName: 'Infosys',
+    Salary: 50000,
+    Designation: 'Software Engineer',
+    Age: 19,
+    Expertise: [ 'Python', 'Javascript', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'mosin@gmail.com',
+    Contact: '1231231231',
+    Address: [
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 },
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45b74e89cebce2649112"),
+    Empid: 126,
+    Name: { FName: 'Pushkaraj', LName: 'Chauhan' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Software Engineer',
+    Age: 21,
+    Expertise: [ 'Python', 'Javascript', 'Java' ],
+    DOB: '2003-12-18',
+    Email: 'pushkaraj@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 },
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45c54e89cebce2649113"),
+    Empid: 126,
+    Name: { FName: 'Amaan', LName: 'Shaikh' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Tester',
+    Age: 21,
+    Expertise: [ 'Python', 'LLVM', 'Java' ],
+    DOB: '2003-06-21',
+    Email: 'amaan@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 },
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 }
+    ]
+  }
+]
+
+Q5)
+db.Employee.updateMany({Company_Name:'TCS'},{$inc:{Salary:-2000}});
+
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+Q6)
+db.Employee.find(
+    {Designation : {$ne:'Developer'}}
+);
+
+
+[ acknowledged: true,
+  {nsertedId: null,
+    _id: ObjectId("653d14dd4e89cebce264910f"),
+    Empid: 123,: 1,
+    Name: { FName: 'Yogiraj', LName: 'Patil' },
+    CompanyName: 'IBM',
+    Salary: 60000,
+    Designation: 'Full stack Developer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Node.js', 'JavaScript' ],
+    DOB: '2003-02-28',
+    Email: 'yogiraj@gmail.com',
+    Contact: '8208090675',
+    Address: [
+      { PAddr: 'Latur', LAddr: 'Pune' },
+      { PAddr: 'Latur', LAddr: 'Mumbai' }
+    ]
+  },
+  {
+    _id: ObjectId("653f455c4e89cebce2649110"),
+    Empid: 124,
+    Name: { FName: 'Prithviraj', LName: 'Mulay' },
+    CompanyName: 'TCS',
+    Salary: 70000,
+    Designation: 'Software Engineer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Php', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'prithviraj@gmail.com',
+    Contact: '1234567899',
+    Address: [
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 },
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45774e89cebce2649111"),
+    Empid: 125,
+    Name: { FName: 'Mosin', LName: 'Inamdar' },
+    CompanyName: 'Infosys',
+    Salary: 50000,
+    Designation: 'Software Engineer',
+    Age: 19,
+    Expertise: [ 'Python', 'Javascript', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'mosin@gmail.com',
+    Contact: '1231231231',
+    Address: [
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 },
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45b74e89cebce2649112"),
+    Empid: 126,
+    Name: { FName: 'Pushkaraj', LName: 'Chauhan' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Software Engineer',
+    Age: 21,
+    Expertise: [ 'Python', 'Javascript', 'Java' ],
+    DOB: '2003-12-18',
+    Email: 'pushkaraj@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 },
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45c54e89cebce2649113"),
+    Empid: 126,
+    Name: { FName: 'Amaan', LName: 'Shaikh' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Tester',
+    Age: 21,
+    Expertise: [ 'Python', 'LLVM', 'Java' ],
+    DOB: '2003-06-21',
+    Email: 'amaan@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 },
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 }
+    ]
+  },
+  {
+    _id: ObjectId("653f4646b21bddc51c17cb16"),
+    Company_Name: 'TCS',
+    Designation: 'Tester',
+    Age: 25,
+    Address: [
+      { Area: 'Somewhere in the Pune', City: 'Pune', Pin_code: 411003 },
+      { Area: 'Somewhere in the Pune', City: 'Pune', Pin_code: 411003 }
+    ],
+    Contact: 7548961235,
+    DOB: '01-01-2003',
+    Email: 'someoneNew@gmail.com',
+    Empid: 127,
+    Expertise: [ 'C/C++', 'Python' ],
+    Name: { FName: 'Someone', LName: 'New' },
+    Salary: 10445
+  }
+]
+
+Q7)
+db.Employee.find(
+    {Company_Name : 'Infosys'},{_id:1,Designation:1,Address:1, Name:1}
+);
+
+[ acknowledged: true,
+  {nsertedId: null,
+    _id: ObjectId("653d14dd4e89cebce264910f"),
+    Empid: 123,: 1,
+    Name: { FName: 'Yogiraj', LName: 'Patil' },
+    CompanyName: 'IBM',
+    Salary: 60000,
+    Designation: 'Full stack Developer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Node.js', 'JavaScript' ],
+    DOB: '2003-02-28',
+    Email: 'yogiraj@gmail.com',
+    Contact: '8208090675',
+    Address: [
+      { PAddr: 'Latur', LAddr: 'Pune' },
+      { PAddr: 'Latur', LAddr: 'Mumbai' }
+    ]
+  },
+  {
+    _id: ObjectId("653f455c4e89cebce2649110"),
+    Empid: 124,
+    Name: { FName: 'Prithviraj', LName: 'Mulay' },
+    CompanyName: 'TCS',
+    Salary: 70000,
+    Designation: 'Software Engineer',
+    Age: 20,
+    Expertise: [ 'MongoDB', 'Php', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'prithviraj@gmail.com',
+    Contact: '1234567899',
+    Address: [
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 },
+      { Area: 'Viman Nagar', City: 'Pune', Pin_code: 411013 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45774e89cebce2649111"),
+    Empid: 125,
+    Name: { FName: 'Mosin', LName: 'Inamdar' },
+    CompanyName: 'Infosys',
+    Salary: 50000,
+    Designation: 'Software Engineer',
+    Age: 19,
+    Expertise: [ 'Python', 'Javascript', 'C++' ],
+    DOB: '2003-03-23',
+    Email: 'mosin@gmail.com',
+    Contact: '1231231231',
+    Address: [
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 },
+      { Area: 'Magarpatta', City: 'Pune', Pin_code: 411008 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45b74e89cebce2649112"),
+    Empid: 126,
+    Name: { FName: 'Pushkaraj', LName: 'Chauhan' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Software Engineer',
+    Age: 21,
+    Expertise: [ 'Python', 'Javascript', 'Java' ],
+    DOB: '2003-12-18',
+    Email: 'pushkaraj@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 },
+      { Area: 'Camp', City: 'Pune', Pin_code: 411002 }
+    ]
+  },
+  {
+    _id: ObjectId("653f45c54e89cebce2649113"),
+    Empid: 126,
+    Name: { FName: 'Amaan', LName: 'Shaikh' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Tester',
+    Age: 21,
+    Expertise: [ 'Python', 'LLVM', 'Java' ],
+    DOB: '2003-06-21',
+    Email: 'amaan@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 },
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 }
+    ]
+  },
+  {
+    _id: ObjectId("653f4646b21bddc51c17cb16"),
+    Company_Name: 'TCS',
+    Designation: 'Tester',
+    Age: 25,
+    Address: [
+      { Area: 'Somewhere in the Pune', City: 'Pune', Pin_code: 411003 },
+      { Area: 'Somewhere in the Pune', City: 'Pune', Pin_code: 411003 }
+    ],
+    Contact: 7548961235,
+    DOB: '01-01-2003',
+    Email: 'someoneNew@gmail.com',
+    Empid: 127,
+    Expertise: [ 'C/C++', 'Python' ],
+    Name: { FName: 'Someone', LName: 'New' },
+    Salary: 10445
+  }
+]
+
+
+Q8)
+db.Employee.find({
+    $or:[
+           {Designation : 'Tester'},{Designation : 'Developer'}
+        ]
+});
+
+[
+  {
+    _id: ObjectId("653f45c54e89cebce2649113"),
+    Empid: 126,
+    Name: { FName: 'Amaan', LName: 'Shaikh' },
+    CompanyName: 'TCS',
+    Salary: 80000,
+    Designation: 'Tester',
+    Age: 21,
+    Expertise: [ 'Python', 'LLVM', 'Java' ],
+    DOB: '2003-06-21',
+    Email: 'amaan@gmail.com',
+    Contact: '1234512345',
+    Address: [
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 },
+      { Area: 'Fatima nagar', City: 'Pune', Pin_code: 411004 }
+    ]
+  },
+  {
+    _id: ObjectId("653f4646b21bddc51c17cb16"),
+    Company_Name: 'TCS',
+    Designation: 'Tester',
+    Age: 25,
+    Address: [
+      { Area: 'Somewhere in the Pune', City: 'Pune', Pin_code: 411003 },
+      { Area: 'Somewhere in the Pune', City: 'Pune', Pin_code: 411003 }
+    ],
+    Contact: 7548961235,
+    DOB: '01-01-2003',
+    Email: 'someoneNew@gmail.com',
+    Empid: 127,
+    Expertise: [ 'C/C++', 'Python' ],
+    Name: { FName: 'Someone', LName: 'New' },
+    Salary: 10445
+  }
+]
+
+Q9)
+db.Employee.find({
+    Expertise:['Mongodb','MySQL','Cassandra']
+});
+
+
+
+Q10)
+db.Employee.deleteOne({
+    Designation : 'Developer'
+});
+
+
+{ acknowledged: true, deletedCount: 0 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
